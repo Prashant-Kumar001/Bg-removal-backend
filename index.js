@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import userRoutes from "./routes/user.route.js"
 dotenv.config({
   quiet: true,
 });
@@ -21,6 +22,8 @@ connectDB();
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
+
+app.use("/api/v1/webhooks", userRoutes);
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");
