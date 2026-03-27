@@ -1,8 +1,8 @@
-import webhook from "svix";
+import { Webhook } from "svix";
 import User from "../models/user.model.js";
 export const clerkWebHook = async (req, res) => {
   try {
-    const wh = new webhook(process.env.SIGNIN_SECRET);
+    const wh = new Webhook(process.env.SIGNIN_SECRET);
     await wh.verify(
       req.body,
       req.headers["svix-timestamp"],
