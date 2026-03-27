@@ -2,6 +2,12 @@ import { Webhook } from "svix";
 import User from "../models/user.model.js";
 export const clerkWebHook = async (req, res) => {
   try {
+
+    if(!process.env.SIGNIN_SECRET){
+      console.log("SIGNIN_SECRET is not defined");
+      return;
+    }
+
     const wh = new Webhook(process.env.SIGNIN_SECRET);
     await wh.verify(JSON.stringify(req.body), {
       "svix-id": req.headers["svix-id"],
@@ -10,6 +16,9 @@ export const clerkWebHook = async (req, res) => {
     });
 
     const { data, type } = req.body;
+
+    console.log(data, type);
+
     switch (type) {
       case "user.created":
         const newUser = {
